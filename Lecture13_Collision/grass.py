@@ -3,6 +3,7 @@ from pico2d import *
 class Grass:
     def __init__(self):
         self.image = load_image('grass.png')
+        self.do_collision = True
 
     def update(self):
         pass

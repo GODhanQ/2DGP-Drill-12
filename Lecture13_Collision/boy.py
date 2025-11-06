@@ -145,6 +145,7 @@ class Boy:
         self.face_dir = 1
         self.dir = 0
         self.image = load_image('animation_sheet.png')
+        self.do_collision = True
 
         self.IDLE = Idle(self)
         self.SLEEP = Sleep(self)

@@ -33,7 +33,7 @@ class Zombie:
         self.load_images()
         self.frame = random.randint(0, 9)
         self.dir = random.choice([-1,1])
-
+        self.do_collision = True
 
     def get_bb(self):
         return self.x - 100, self.y - 100, self.x + 100, self.y + 100

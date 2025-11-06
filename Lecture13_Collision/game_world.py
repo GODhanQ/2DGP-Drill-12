@@ -71,6 +71,8 @@ def handle_collisions():
     for group, pairs in collision_pairs.items():
         for a in pairs[0]:
             for b in pairs[1]:
+                if a.do_collision == False or b.do_collision == False:
+                    continue
                 if collide(a, b):
                     print(f'COLLISION! {group}')
                     a.handle_collision(group, b)
