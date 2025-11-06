@@ -36,9 +36,13 @@ class Zombie:
         self.do_collision = True
         self.ball_collision_count = 0
         self.scale = 200.0
+        self.collision_scale = 1.0
 
     def get_bb(self):
-        return self.x - 100, self.y - 100, self.x + 100, self.y + 100
+        return (self.x - 100 * self.collision_scale,
+                self.y - 100 * self.collision_scale,
+                self.x + 100 * self.collision_scale,
+                self.y + 100 * self.collision_scale)
 
     def update(self):
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % FRAMES_PER_ACTION
@@ -65,6 +69,9 @@ class Zombie:
         if group == 'zombie:ball':
             self.ball_collision_count += 1
             self.scale = self.scale / 2
+            self.collision_scale = self.collision_scale / 2
+            self.y -= 0.35 * self.y
+
             if self.ball_collision_count >= 2:
                 game_world.remove_object(self)
                 print("Zombie removed after 2 ball collisions")
