@@ -193,3 +193,6 @@ class Boy:
         if group == 'boy:ball':
             self.ball_count += 1
             # game_world.remove_object(other) # a가 b의 행동 제어 X
+        if group == 'zombie:boy':
+            print("End Game")
+            game_framework.quit()
