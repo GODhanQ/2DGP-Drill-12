@@ -1,3 +1,5 @@
+import time
+
 from pico2d import *
 import game_world
 import game_framework
@@ -16,6 +18,7 @@ class Ball:
         self.yv = abs(throwin_speed * math.sin(math.radians(throwin_angle)))   # m/s
         self.stopped = True if throwin_speed == 0.0 else False
         self.do_collision = True
+        self.collision_timer = time.time()
 
     def draw(self):
         self.image.draw(self.x, self.y)
@@ -34,6 +37,20 @@ class Ball:
         if self.x < 0 or self.x > 1600:
             self.xv = -self.xv
 
+        vector_length = math.sqrt(self.xv ** 2 + self.yv ** 2)
+        if vector_length < 0.1:
+            self.stopped = True
+            print("Ball stopped moving")
+
+        if self.do_collision == False:
+            # 약 1초 후에 충돌 활성화
+            duration = time.time() - self.collision_timer
+            if duration > 0.1:
+                self.do_collision = True
+                print("Ball collision activated")
+
+
+
     def get_bb(self):
         return self.x - 10, self.y - 10, self.x + 10, self.y + 10
 
@@ -44,3 +61,7 @@ class Ball:
         if group == 'grass:ball':
             self.xv = self.xv * 0.6
             self.yv = -self.yv * 0.6
+
+            self.do_collision = False
+            print("Ball collided with grass, bouncing")
+            self.collision_timer = time.time()
