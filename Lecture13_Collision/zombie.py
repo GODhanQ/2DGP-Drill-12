@@ -34,6 +34,8 @@ class Zombie:
         self.frame = random.randint(0, 9)
         self.dir = random.choice([-1,1])
         self.do_collision = True
+        self.ball_collision_count = 0
+        self.scale = 200.0
 
     def get_bb(self):
         return self.x - 100, self.y - 100, self.x + 100, self.y + 100
@@ -51,11 +53,18 @@ class Zombie:
 
     def draw(self):
         if self.dir < 0:
-            Zombie.images['Walk'][int(self.frame)].composite_draw(0, 'h', self.x, self.y, 200, 200)
+            Zombie.images['Walk'][int(self.frame)].composite_draw(0, 'h', self.x, self.y, self.scale, self.scale)
         else:
-            Zombie.images['Walk'][int(self.frame)].draw(self.x, self.y, 200, 200)
+            Zombie.images['Walk'][int(self.frame)].draw(self.x, self.y, self.scale, self.scale)
         draw_rectangle(*self.get_bb())
 
     def handle_event(self, event):
         pass
 
+    def handle_collision(self, group, other):
+        if group == 'zombie:ball':
+            self.ball_collision_count += 1
+            self.scale = self.scale / 2
+            if self.ball_collision_count >= 2:
+                game_world.remove_object(self)
+                print("Zombie removed after 2 ball collisions")

@@ -182,6 +182,7 @@ class Boy:
 
             game_world.add_collision_pair('grass:ball', None, ball)
             game_world.add_collision_pair('boy:ball', None, ball)
+            game_world.add_collision_pair('zombie:ball', None, ball)
 
 
 

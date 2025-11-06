@@ -65,3 +65,6 @@ class Ball:
             self.do_collision = False
             print("Ball collided with grass, bouncing")
             self.collision_timer = time.time()
+
+        if group == 'zombie:ball':
+            game_world.remove_object(self)
